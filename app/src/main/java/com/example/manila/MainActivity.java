@@ -13,6 +13,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,9 +66,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ListFragment listFragment = new ListFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, listFragment).commit();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loaddata();
+
+
     }
 
     public void saveData() {
@@ -202,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadDatabase(View view) {
-       View parent= (View) LandmarkFragment.passdata.getParent();
+       View parent= (View) ListFragment.passdata.getParent();
         recyclerView = parent.findViewById(R.id.List);
         mydb = new DatabaseHelperForLandmarks(this);
         recyclerView.setHasFixedSize(true);

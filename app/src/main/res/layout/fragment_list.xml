@@ -16,16 +16,18 @@
         android:text="MNList"
         android:textSize="36dp" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/List"
         android:layout_width="match_parent"
-        android:layout_height="443dp"
-        android:layout_margin="15dp" />
-
+        android:layout_height="350dp"
+        android:layout_margin="15dp" >
+    </androidx.recyclerview.widget.RecyclerView>
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add"
+        android:onClick="onCLickAdd"
         android:layout_margin="15dp"/>
 
 </LinearLayout>

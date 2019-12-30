@@ -25,19 +25,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        if(etName.getText().toString().isEmpty()||etPassword.getText().toString().isEmpty()){
-            Toast.makeText(this, "Fill all the TextField", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mydb= new DatabaseHelper(this);
-       Boolean check= mydb.CheckLogin(etName.getText().toString(),etPassword.getText().toString());
-        if(check){
-            startActivity(new Intent(this,MainActivity.class));
-            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "You fail to log in", Toast.LENGTH_SHORT).show();
-        }
-
+//        if(etName.getText().toString().isEmpty()||etPassword.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Fill all the TextField", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        mydb= new DatabaseHelper(this);
+//       Boolean check= mydb.CheckLogin(etName.getText().toString(),etPassword.getText().toString());
+//        if(check){
+//            startActivity(new Intent(this,MainActivity.class));
+//            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+//        }else{
+//            Toast.makeText(this, "You fail to log in", Toast.LENGTH_SHORT).show();
+//        }
+        startActivity(new Intent(this,MainActivity.class));
     }
 
     public void LoginRegister(View view) {
