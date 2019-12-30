@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +29,25 @@ public class RegisterActivity extends AppCompatActivity {
         etConfirm = (EditText) findViewById(R.id.etConfirm);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnCancel = (Button) findViewById(R.id.btnCancel);
+
+        //This is just a scratch, it will be use as a suggested box that the input of the user doesnt match the etPassword
+        // and it will be shown under the etConfirm EditText
+        etConfirm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!etPassword.getText().toString().equals(etConfirm.getText().toString())){
+                    Toast.makeText(RegisterActivity.this, "Password doesn't match", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public void register(View view) {
@@ -38,6 +59,11 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter a Valid Email", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(!etConfirm.getText().toString().equals(etPassword.getText().toString())){
+            Toast.makeText(RegisterActivity.this, "Password doesn't match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         mydb= new DatabaseHelper(this);
         SQLiteDatabase db = mydb.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM Accounts_List WHERE Email = ? ", new String[]{etEmail.getText().toString()});
@@ -46,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
             Boolean inserted=mydb.insertData(etFirstName.getText().toString(),etLastName.getText().toString(),etEmail.getText().toString(),etPassword.getText().toString());
             if(inserted){
                 Toast.makeText(RegisterActivity.this, "Successfully Inserted", Toast.LENGTH_SHORT).show();
-                this.onDestroy();
+                startActivity(new Intent(this,MainActivity.class));
             }else{
                 Toast.makeText(RegisterActivity.this, "Failed to insert", Toast.LENGTH_SHORT).show();
             }

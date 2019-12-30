@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LandmarkFragment"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".LandmarkFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewLandmarks"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
         android:gravity="center"
-        android:text="Landmarks"
+        android:text="@string/landmarks"
         android:textSize="36sp" />
 
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="443dp"
-        android:layout_margin="15dp" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    </ListView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/List"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_margin="15dp" >
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ButtonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:onClick="onCLickAdd"
+        android:clickable="true"
+        android:layout_marginRight="40dp"
+
+        android:src="@android:drawable/ic_input_add" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,17 +52,17 @@
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="15dp"
-            android:text="PREVIOUS" />
+            android:layout_weight="1"
+            android:text="@string/previous" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:layout_weight="1"
-            android:text="NEXT"
-            android:layout_margin="15dp"/>
+            android:text="@string/next" />
     </LinearLayout>
 
 </LinearLayout>
