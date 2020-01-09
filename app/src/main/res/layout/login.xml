@@ -23,7 +23,7 @@
         android:ems="10"
         android:layout_margin="15dp"
         android:inputType="textPersonName"
-        android:hint="Email or Username" />
+        android:hint="Email" />
 
     <EditText
         android:id="@+id/etPassword"

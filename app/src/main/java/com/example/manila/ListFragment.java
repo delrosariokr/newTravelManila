@@ -21,44 +21,47 @@ import com.google.android.gms.plus.PlusOneButton;
 import java.util.ArrayList;
 
 public class ListFragment extends Fragment {
-    private DatabaseHelperForLandmarks mydb;
+    private DatabaseHelperForUsers mydb;
     private RecyclerView recyclerView;
-    private  RecyclerView.Adapter myAdapter;
+    private RecyclerView.Adapter myAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Landmarks> landmarks;
-    private ArrayList<String> landmarks2 = new ArrayList<>();
     private View view;
     public static View passdata;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_list, container, false);
-        passdata=view;
-        mydb = new DatabaseHelperForLandmarks(view.getContext());
-        Cursor res = mydb.getAllData();
+        passdata = view;
+        int User = getArguments().getInt("User");
+        mydb = new DatabaseHelperForUsers(view.getContext());
+        Cursor res = mydb.getAllDataForList(User);
         if (res.getCount() == 0) {
-            Toast.makeText(getActivity(), "Empty", Toast.LENGTH_SHORT).show();
-            view=view;
+            Toast.makeText(view.getContext(), "EMPTY", Toast.LENGTH_SHORT).show();
+            return view;
         } else {
-            view = loadDatabase(view);
+            view = loadDatabase(view, User);
         }
         return view;
 
     }
 
-    public View loadDatabase(View view) {
+
+    public View loadDatabase(View view, int User) {
         recyclerView = view.findViewById(R.id.List);
-        mydb = new DatabaseHelperForLandmarks(getActivity());
+        mydb = new DatabaseHelperForUsers(getActivity());
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         landmarks = new ArrayList<Landmarks>();
-        Cursor res = mydb.getAllData();
+        Cursor res = mydb.getAllDataForList(User);
         if (res.getCount() == 0) {
             landmarks.clear();
         } else {
             while (res.moveToNext()) {
-                landmarks.add(new Landmarks(res.getString(1), "Add Details", res.getString(1)));
+                String temp = mydb.getLandmarksBaseOnID(res.getInt(1));
+                landmarks.add(new Landmarks(temp, "Add Details", temp));
             }
         }
 
@@ -66,4 +69,5 @@ public class ListFragment extends Fragment {
         recyclerView.setAdapter(myAdapter);
         return view;
     }
+
 }

@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RegisterActivity extends AppCompatActivity {
     EditText etFirstName, etLastName, etEmail, etPassword, etConfirm;
     Button btnRegister, btnCancel;
-    private DatabaseHelper mydb;
+    private DatabaseHelperForUsers mydb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,15 +64,15 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        mydb= new DatabaseHelper(this);
+        mydb= new DatabaseHelperForUsers(this);
         SQLiteDatabase db = mydb.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM Accounts_List WHERE Email = ? ", new String[]{etEmail.getText().toString()});
 
         if(res.getCount()==0){
-            Boolean inserted=mydb.insertData(etFirstName.getText().toString(),etLastName.getText().toString(),etEmail.getText().toString(),etPassword.getText().toString());
+            Boolean inserted=mydb.insertData(etFirstName.getText().toString(),etLastName.getText().toString(),etEmail.getText().toString(),etPassword.getText().toString(),1,0);
             if(inserted){
                 Toast.makeText(RegisterActivity.this, "Successfully Inserted", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this,MainActivity.class));
+                startActivity(new Intent(this,LoginActivity.class));
             }else{
                 Toast.makeText(RegisterActivity.this, "Failed to insert", Toast.LENGTH_SHORT).show();
             }
