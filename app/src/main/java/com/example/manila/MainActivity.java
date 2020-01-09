@@ -223,6 +223,8 @@ public class MainActivity extends AppCompatActivity {
         Button ButtonExit = view1.findViewById(R.id.ButtonExit);
         Button ButtonRemove = view1.findViewById(R.id.ButtonRemove);
         Button ButtonViewDetails = view1.findViewById(R.id.ButtonDetails);
+        Button ButtonVerify = view1.findViewById(R.id.ButtonVerify);
+
         ButtonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -263,6 +265,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ButtonVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ScanCodeActivity.class));
+            }
+        });
     }
 
 
