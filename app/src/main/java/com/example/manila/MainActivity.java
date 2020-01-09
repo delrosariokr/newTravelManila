@@ -306,4 +306,5 @@ public class MainActivity extends AppCompatActivity {
         myAdapter = new LandmarksAdapter(this, landmarks);
         recyclerView.setAdapter(myAdapter);
     }
+    // Jomari
 }
