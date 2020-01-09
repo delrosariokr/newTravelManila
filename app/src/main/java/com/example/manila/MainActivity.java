@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private String date;
+    private String DateAlertDialogBox;
     private String user;
     private ArrayList<String> landmarks2 = new ArrayList<>();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -200,6 +201,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void showCustomAlertDialogBox(View view){
+
+        mydb=new DatabaseHelperForUsers(this);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        View view1=getLayoutInflater().inflate(R.layout.alertdialogboxcustomize, null);
+        View parent=(View) view.getParent();
+        TextView teskview=(TextView) parent.findViewById(R.id.TextViewTitleDisplay);
+        teskview.setText();
+        Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
+        alert.setView(view1);
+        final AlertDialog alertDialog = alert.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+
+        alertDialog.show();
 
     }
 
