@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -200,20 +201,67 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("User", user);
         startActivity(intent);
     }
-    public void showCustomAlertDialogBox(View view){
 
-        mydb=new DatabaseHelperForUsers(this);
+    public void showCustomAlertDialogBox(View view) {
+        mydb = new DatabaseHelperForUsers(this);
         final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-        View view1=getLayoutInflater().inflate(R.layout.alertdialogboxcustomize, null);
-        View parent=(View) view.getParent();
-        TextView teskview=(TextView) parent.findViewById(R.id.TextViewTitleDisplay);
-        teskview.setText();
-        Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
+        final View view1 = getLayoutInflater().inflate(R.layout.alertdialogboxcustomize, null);
+
+        View parent = (View) view.getParent();
+        final TextView text = (TextView) parent.findViewById(R.id.TextViewTitle);
+        System.out.println(text.getText().toString());
+        TextView test = (TextView) view1.findViewById(R.id.TextViewAlertDialogTitle);
+        test.setText(text.getText().toString());
+        final int userID = mydb.getIDFromTableUser(user);
+        final int landmarksID = mydb.getIDFromTableLandmarks(text.getText().toString());
+        TextView TextViewDateAlertDialogbox = view1.findViewById(R.id.TextViewDateAlertDialogbox);
+        TextViewDateAlertDialogbox.setText(mydb.getDate(userID, landmarksID));
+
         alert.setView(view1);
         final AlertDialog alertDialog = alert.create();
         alertDialog.setCanceledOnTouchOutside(false);
-
+        Button ButtonExit = view1.findViewById(R.id.ButtonExit);
+        Button ButtonRemove = view1.findViewById(R.id.ButtonRemove);
+        Button ButtonViewDetails = view1.findViewById(R.id.ButtonDetails);
+        ButtonExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
         alertDialog.show();
+        ButtonRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view1.getContext());
+                builder.setTitle("Landmarks");
+                builder.setMessage("Delete?");
+               builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialog, int which) {
+                    int i=mydb.DeleteDataUserList(userID,landmarksID);
+                       loadDatabase(userID);
+                   }
+               });
+               builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialog, int which) {
+                       Toast.makeText(MainActivity.this, "No deletion", Toast.LENGTH_SHORT).show();
+                   }
+               });
+                builder.create();
+                builder.show(); }
+        });
+
+        ButtonViewDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), LandmarkInfoActivity.class);
+                intent.putExtra("User", userID);
+                intent.putExtra("Title", text.getText().toString());
+                startActivity(intent);
+            }
+        });
 
     }
 

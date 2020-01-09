@@ -19,26 +19,26 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
     public static final String Column_LName = "LastName";
     public static final String Column_Email = "Email";
     public static final String Column_Pass = "Password";
-    public static final String Column_Level="Level";
-    public static final String Column_Exp="Experience";
+    public static final String Column_Level = "Level";
+    public static final String Column_Exp = "Experience";
 
     //UserVisit
     public static final String Database_Table_UserVisit = "User_Visit";
-    public static final String Column_Date_UserVisit="Date";
+    public static final String Column_Date_UserVisit = "Date";
 
     //Landmarks
     public static final String Database_Table_Landmarks = "LandmarksList";
-    public static final String Column_ID_Landmarks="Landmarks_ID";
-    public static final String Column_Description_Landmarks="Description";
-    public static final String Column_Title_Landmarks="Title";
+    public static final String Column_ID_Landmarks = "Landmarks_ID";
+    public static final String Column_Description_Landmarks = "Description";
+    public static final String Column_Title_Landmarks = "Title";
 
     //User_Visited
     public static final String Database_Table_Visited = "VisitedList";
-    public static final String Column_Date_Visited="Date";
+    public static final String Column_Date_Visited = "Date";
 
     //Rewards
     public static final String Database_Table_Rewards = "RewardsList";
-    public static final String Column_ID_Rewards="Rewards_ID";
+    public static final String Column_ID_Rewards = "Rewards_ID";
     public static final String Column_Description_Rewards = "Description";
     public static final String Column_RewardsCode_Rewards = "RewardsCode";
 
@@ -68,15 +68,15 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + Database_Table_UserVisit + " (" + Column_ID + " INTEGER " + ","
                 + Column_ID_Landmarks + " INTEGER " + ","
                 + Column_Date_UserVisit + " TEXT " + ","
-                + "FOREIGN KEY "+"("+Column_ID_Landmarks+")"+ " REFERENCES "+ Database_Table_Landmarks + "("+Column_ID+")"
-                + ", FOREIGN KEY "+"("+Column_ID+")"+ " REFERENCES "+ Database_Table + "("+Column_ID+")"+")");
+                + "FOREIGN KEY " + "(" + Column_ID_Landmarks + ")" + " REFERENCES " + Database_Table_Landmarks + "(" + Column_ID + ")"
+                + ", FOREIGN KEY " + "(" + Column_ID + ")" + " REFERENCES " + Database_Table + "(" + Column_ID + ")" + ")");
 
         //Table for User_Visited
         db.execSQL("CREATE TABLE " + Database_Table_Visited + " (" + Column_ID + " INTEGER " + ","
                 + Column_ID_Landmarks + " INTEGER " + ","
                 + Column_Date_Visited + " TEXT " + ","
-                + "FOREIGN KEY "+"("+Column_ID_Landmarks+")"+ " REFERENCES "+ Database_Table_Landmarks + "("+Column_ID+")"
-                + ", FOREIGN KEY "+"("+Column_ID+")"+ " REFERENCES "+ Database_Table + "("+Column_ID+")"+")");
+                + "FOREIGN KEY " + "(" + Column_ID_Landmarks + ")" + " REFERENCES " + Database_Table_Landmarks + "(" + Column_ID + ")"
+                + ", FOREIGN KEY " + "(" + Column_ID + ")" + " REFERENCES " + Database_Table + "(" + Column_ID + ")" + ")");
 
         //Table for Rewards
         db.execSQL("CREATE TABLE " + Database_Table_Rewards + " (" + Column_ID_Rewards + " INTEGER PRIMARY KEY AUTOINCREMENT" + ","
@@ -95,7 +95,7 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertDataInRewards (String Description,String code) {
+    public boolean insertDataInRewards(String Description, String code) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Column_Description_Rewards, Description);
@@ -106,7 +106,8 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
         }
         return true;
     }
-    public boolean insertDataInLandmarks (String Title,String Description) {
+
+    public boolean insertDataInLandmarks(String Title, String Description) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Column_Title_Landmarks, Title);
@@ -117,7 +118,8 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
         }
         return true;
     }
-    public boolean insertDataInVisited(String UserID,String LandmarksID,String date) {
+
+    public boolean insertDataInVisited(String UserID, String LandmarksID, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Column_ID, UserID);
@@ -130,7 +132,7 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean insertDataInUserVisit(int UserID,int LandmarksID,String Date) {
+    public boolean insertDataInUserVisit(int UserID, int LandmarksID, String Date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Column_ID, UserID);
@@ -143,7 +145,7 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean insertData(String Fname, String Lname, String Email, String Pass,int Level,int Exp) {
+    public boolean insertData(String Fname, String Lname, String Email, String Pass, int Level, int Exp) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Column_FName, Fname);
@@ -159,43 +161,44 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
         return true;
     }
 
-    public Boolean CheckLogin(String username,String password) {
+    public Boolean CheckLogin(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table, null);
-        while (cursor.moveToNext()){
-            if(cursor.getString(3).equals(username)&& cursor.getString(4).equals(password)){
-                return true;
-            }
-        }
-    return false;
-    }
-    public Boolean CheckIfUser_ListExist(int userId,int landmarksId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table_UserVisit, null);
-        while (cursor.moveToNext()){
-            if(cursor.getString(0).equals(String.valueOf(userId))&& cursor.getString(1).equals(String.valueOf(landmarksId))){
+        while (cursor.moveToNext()) {
+            if (cursor.getString(3).equals(username) && cursor.getString(4).equals(password)) {
                 return true;
             }
         }
         return false;
     }
 
-    public int getIDFromTableLandmarks(String Title){
+    public Boolean CheckIfUser_ListExist(int userId, int landmarksId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table_UserVisit, null);
+        while (cursor.moveToNext()) {
+            if (cursor.getString(0).equals(String.valueOf(userId)) && cursor.getString(1).equals(String.valueOf(landmarksId))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getIDFromTableLandmarks(String Title) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table_Landmarks, null);
-        while (cursor.moveToNext()){
-            if(cursor.getString(1).equals(Title)){
+        while (cursor.moveToNext()) {
+            if (cursor.getString(1).equals(Title)) {
                 return cursor.getInt(0);
             }
         }
         return 0;
     }
 
-    public int getIDFromTableUser(String User){
+    public int getIDFromTableUser(String User) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table, null);
-        while (cursor.moveToNext()){
-            if(cursor.getString(3).equals(User)){
+        while (cursor.moveToNext()) {
+            if (cursor.getString(3).equals(User)) {
                 return cursor.getInt(0);
             }
         }
@@ -203,13 +206,12 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
     }
 
 
-
-    public String Description(String title){
+    public String Description(String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table_Landmarks, null);
         System.out.println("HereFirst");
-        while (cursor.moveToNext()){
-            if(cursor.getString(1).equals(title)){
+        while (cursor.moveToNext()) {
+            if (cursor.getString(1).equals(title)) {
                 return cursor.getString(2);
             }
         }
@@ -221,22 +223,34 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table_Landmarks, null);
         return cursor;
     }
+
     public Cursor getAllDataForList(int userID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table_UserVisit +" WHERE "+ Column_ID +" = " + userID, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table_UserVisit + " WHERE " + Column_ID + " = " + userID, null);
         return cursor;
     }
 
-    public String getLandmarksBaseOnID(int LandmarkID){
+    public String getLandmarksBaseOnID(int LandmarkID) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table_Landmarks, null);
-        while (cursor.moveToNext()){
-            if(cursor.getInt(0)==(LandmarkID)){
+        while (cursor.moveToNext()) {
+            if (cursor.getInt(0) == (LandmarkID)) {
                 return cursor.getString(1);
             }
         }
 
         return "NULL on GetLandmarksBaseOnID";
+    }
+
+    public String getDate(int userID, int LandmarkID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Database_Table_UserVisit, null);
+        while (cursor.moveToNext()) {
+            if (cursor.getString(0).equals(String.valueOf(userID)) && cursor.getString(1).equals(String.valueOf(LandmarkID))) {
+                return cursor.getString(2);
+            }
+        }
+        return null;
     }
 
     public boolean UpdateData(String ID, String Fname, String Lname, String Email, String Pass) {
@@ -251,9 +265,9 @@ public class DatabaseHelperForUsers extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer DeleteData(String ID) {
+    public Integer DeleteDataUserList(int userID,int landMarkID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(Database_Table, "ID = ?", new String[]{ID});
+        return db.delete(Database_Table_UserVisit, Column_ID + " = ? AND "+ Column_ID_Landmarks+ " = ? ", new String[]{ String.valueOf(userID) , String.valueOf(landMarkID) });
     }
 
 }
